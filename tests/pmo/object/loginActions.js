@@ -12,14 +12,7 @@ export default class loginActions {
         this.inputUsername = page.locator(this.loginPage.inputUsername);
         this.inputPassword = page.locator(this.loginPage.inputPassword);
         this.clickButtonLogin = page.locator(this.loginPage.clickButton);
-        this.addToCart = page.locator(this.loginPage.addToCart);
-        this.shopCart = page.locator(this.loginPage.shopCart);
-        this.checkOut = page.locator(this.loginPage.checkOut);
-        this.firstName = page.locator(this.loginPage.firstName);
-        this.lastName = page.locator(this.loginPage.lastName);
-        this.postalCode = page.locator(this.loginPage.postalCode);
-        this.continueButton = page.locator(this.loginPage.continueButton);
-        this.finishButton = page.locator(this.loginPage.finishButton);
+        this.errorMessage = page.locator(this.loginPage.errorMessage);
     }
 
     async goto() {
@@ -32,16 +25,14 @@ export default class loginActions {
         await this.inputPassword.fill('secret_sauce');
         await expect(this.inputPassword).toHaveValue('secret_sauce');
         await this.clickButtonLogin.click();
-        await this.addToCart.click();
-        await this.shopCart.click();
-        await this.checkOut.click();
-        await this.firstName.fill('Putu');
-        await expect(this.firstName).toHaveValue('Putu');
-        await this.lastName.fill('Raditha');
-        await expect(this.lastName).toHaveValue('Raditha');
-        await this.postalCode.fill('35667');
-        await expect(this.postalCode).toHaveValue('35667');
-        await this.continueButton.click();
-        await this.finishButton.click();
+    }
+
+    async LoginNegative () {
+        await this.inputUsername.fill('testing');
+        await expect(this.inputUsername).toHaveValue('testing');
+        await this.inputPassword.fill('testing123');
+        await expect(this.inputPassword).toHaveValue('testing123');
+        await this.clickButtonLogin.click();
+        await expect(this.errorMessage).toBeVisible();
     }
 }
